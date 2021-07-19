@@ -33,17 +33,28 @@ public class UsetController {
 
     @GetMapping("/user")
     @ResponseBody
-    public MSG loginUser(@RequestHeader Map<String, Object> header) {
-        String token = (String) header.get("token");
+    public MSG loginUser(@RequestHeader(value = "token",required = false,defaultValue = "")String token) {
         if (!StringUtils.hasLength(token)) return MSG.fail("未登录");
         try {
-            Integer uid = Integer.parseInt(TokenUtil.decode(token));
-            if (StringUtils.hasLength(token)){
-                User user = userMapper.selectById(uid);
+            String uid = TokenUtil.decode(token);
+            if (StringUtils.hasLength(uid)){
+                User user = userMapper.selectById(Integer.parseInt(uid));
                 return MSG.success("已登录", user);
             }else {
                 return MSG.fail("未登录");
             }
+        }catch (NumberFormatException e){
+            return MSG.fail("未登录");
+        }
+    }
+
+    @GetMapping("/isLogin")
+    @ResponseBody
+    public MSG isLogin(@RequestHeader(value = "token",required = false,defaultValue = "")String token) {
+        if (!StringUtils.hasLength(token)) return MSG.fail("未登录");
+        try {
+            String uid = TokenUtil.decode(token);
+            return StringUtils.hasLength(uid) ? MSG.success("已登录") : MSG.fail("未登录");
         }catch (NumberFormatException e){
             return MSG.fail("未登录");
         }
