@@ -1,6 +1,6 @@
 package com.lj.cloudbox.controller;
 
-import com.lj.cloudbox.pojo.MSG;
+import com.lj.cloudbox.pojo.msg.MSG;
 import com.lj.cloudbox.utils.ProjectProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

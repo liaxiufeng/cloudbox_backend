@@ -1,7 +1,7 @@
 package com.lj.cloudbox.controller;
 
 import com.lj.cloudbox.mapper.UserMapper;
-import com.lj.cloudbox.pojo.MSG;
+import com.lj.cloudbox.pojo.msg.MSG;
 import com.lj.cloudbox.pojo.User;
 import com.lj.cloudbox.service.UserService;
 import com.lj.cloudbox.utils.TokenUtil;
