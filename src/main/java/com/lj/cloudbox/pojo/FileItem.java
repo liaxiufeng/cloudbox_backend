@@ -1,5 +1,6 @@
 package com.lj.cloudbox.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.ToString;
 @ToString
 @TableName("file_item")
 public class FileItem extends Model<FileItem> {
+    @TableId
     private Integer fid;
     private String path;
     private Integer uid;

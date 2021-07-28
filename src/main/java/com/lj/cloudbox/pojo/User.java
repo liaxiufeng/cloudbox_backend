@@ -1,5 +1,6 @@
 package com.lj.cloudbox.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
@@ -13,8 +14,10 @@ import java.util.Date;
 @ToString
 @TableName("user")
 public class User extends Model<User> {
+    @TableId
     private Integer uid;
     private String username;
+    private String email;
     private String password;
     private Date birthday;
 
@@ -22,4 +25,6 @@ public class User extends Model<User> {
     private String recommendWord;
     private String homePath;
     private Integer accountAge;
+
+
 }

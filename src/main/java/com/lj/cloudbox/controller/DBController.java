@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
-@CrossOrigin
+@RestController("test")
 public class DBController {
 
     @GetMapping("/show")

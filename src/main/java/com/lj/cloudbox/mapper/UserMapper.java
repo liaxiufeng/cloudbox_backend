@@ -8,18 +8,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserMapper extends BaseMapper<User> {
-    @Select("select count(*) from user where  username = #{username} and `password` = #{password}")
-    Boolean canLogin(User user);
-
-    @Select("select * from user where  username = #{username} and `password` = #{password}")
-    User loginReturnUser(User user);
-
-    @Select("select count(*) from user where username = #{username} and `password` = #{password}")
-    Boolean canLogin(@Param("username") String username,@Param("password") String password);
+    @Select("select * from user where  email = #{email} and `password` = #{password}")
+    User login(User user);
 
     @Select("select count(*) from user where  username = #{username} and `password` = #{password}")
     Boolean canRegister(@Param("username") String username);
-    @Select("select * from user where uid = #{uid}")
-    User selectById(Integer uid);
 
 }
