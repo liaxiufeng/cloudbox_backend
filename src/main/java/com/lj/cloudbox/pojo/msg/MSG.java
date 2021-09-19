@@ -1,8 +1,10 @@
 package com.lj.cloudbox.pojo.msg;
 
 public class MSG {
-    private static final  Integer SUCCESS_CODE = 200;
-    private static final  Integer FAIL_CODE = 500;
+    private static final Integer SUCCESS_CODE = 200;
+    private static final Integer FAIL_CODE = 500;
+    private static final Integer NOT_FIND_CODE = 404;
+    private static final Integer CONFLICT_CODE = 300;
     private Integer status;
     private String msg;
     private Object data;
@@ -29,6 +31,25 @@ public class MSG {
         return new MSG(FAIL_CODE, msg);
     }
 
+    public static MSG notFind() {
+        return new MSG(NOT_FIND_CODE, "找不到页面");
+    }
+
+    public static MSG notFind(String msg) {
+        return new MSG(NOT_FIND_CODE, msg);
+    }
+
+    public static MSG notFind(String msg,Object data) {
+        return new MSG(NOT_FIND_CODE, msg,data);
+    }
+
+    public static MSG conflict(String msg) {
+        return new MSG(CONFLICT_CODE, msg);
+    }
+
+    public static MSG conflict(String msg,Object data) {
+        return new MSG(CONFLICT_CODE, msg,data);
+    }
 
     public static MSG success(String msg, Object data) {
         return new MSG(SUCCESS_CODE, msg, data);
@@ -73,6 +94,4 @@ public class MSG {
         this.data = data;
         return this;
     }
-
-
 }

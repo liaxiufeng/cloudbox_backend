@@ -17,7 +17,6 @@ public class TokenUtil {
      * @param uid
      * @return
      */
-
     public static String sign(String uid) {
         String token = null;
         try {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.cloudbox.mapper.UserMapper">
+    <resultMap id="userMap" type="User">
+        <id column="uid" property="uid"/>
+        <result column="username" property="username"/>
+        <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="describeWord" property="describeWord"/>
+        <result column="birthday" property="birthday"/>
+        <result column="accountBirthday" property="accountBirthday"/>
+        <association property="homeFile" javaType="FileBean">
+            <id column="fid" property="fid"/>
+            <id column="parent" property="parent"/>
+            <id column="uid" property="uid"/>
+            <id column="name" property="name"/>
+            <id column="is_folder" property="isFolder"/>
+            <id column="is_heart" property="isHeart"/>
+        </association>
+    </resultMap>
+    <select id="selectById" resultMap="userMap">
+        SELECT * from user,file_item where user.uid = #{uid} and `user`.home_file = file_item.fid
+    </select>
+
+    <select id="getHome" resultType="java.lang.String">
+        select `name` from file_item,`user` where user.uid = #{uid} and user.home_file = file_item.fid
+    </select>
+
+</mapper>
