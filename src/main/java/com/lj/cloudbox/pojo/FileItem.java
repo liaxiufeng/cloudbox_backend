@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -14,16 +15,18 @@ import java.io.File;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @TableName("file_item")
-public class FileBean extends Model<FileBean> implements Comparable<FileBean> {
+public class FileItem extends Model<FileItem> implements Comparable<FileItem> {
     @TableId(type = IdType.AUTO)
     private Integer fid;
     private Integer parent;
     private Integer uid;
     private String name;
-    private Boolean isFolder;
     private Boolean isHeart;
+    private Boolean isFolder;
+
 
     @TableField(exist = false)
     private String size;
@@ -31,18 +34,20 @@ public class FileBean extends Model<FileBean> implements Comparable<FileBean> {
     private Boolean isEmpty;
     @TableField(exist = false)
     private String lastUpdateDate;
+    @TableField(exist = false)
+    private Integer childrenNumber;
 
-    public FileBean(FileBean fileBean) {
-        this.fid = fileBean.getFid();
-        this.parent = fileBean.getParent();
-        this.uid = fileBean.getUid();
-        this.name = fileBean.getName();
-        this.isFolder = fileBean.getIsFolder();
-        this.isHeart = fileBean.getIsHeart();
+    public FileItem(FileItem fileItem) {
+        this.fid = fileItem.getFid();
+        this.parent = fileItem.getParent();
+        this.uid = fileItem.getUid();
+        this.name = fileItem.getName();
+        this.isFolder = fileItem.getIsFolder();
+        this.isHeart = fileItem.getIsHeart();
     }
 
     @Override
-    public int compareTo(FileBean o) {
+    public int compareTo(FileItem o) {
         if (this.isFolder) {
             return o.getIsFolder() ? this.name.compareTo(o.getName()) : 1;
         } else {
@@ -52,8 +57,8 @@ public class FileBean extends Model<FileBean> implements Comparable<FileBean> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof FileBean) {
-            FileBean temp = (FileBean) obj;
+        if (obj instanceof FileItem) {
+            FileItem temp = (FileItem) obj;
             return this.uid.equals(temp.getUid()) &&
                     ((this.parent == null && temp.getParent() == null) || (this.parent.equals(temp.getParent()))) &&
                     this.name.equals(temp.getName()) &&

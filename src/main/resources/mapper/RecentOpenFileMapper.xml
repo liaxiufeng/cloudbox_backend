@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.cloudbox.mapper.RecentOpenFileMapper">
+    <resultMap id="recentMap" type="RecentOpenFile">
+        <result column="fid" property="fileItem" javaType="FileItem" typeHandler="com.lj.cloudbox.mapper.typeHandler.FileItemTypeHandler"/>
+        <result column="children_number" property="fileItem.childrenNumber"/>
+        <result column="time" property="fileItem.lastUpdateDate"/>
+    </resultMap>
+    <sql id="selectCode">
+        SELECT r.*,(select count(*) from file_item f2 where f2.parent = f.fid) as children_number from recent_open_file r,file_item f where r.fid = f.fid and
+    </sql>
+    <select id="getRecentFiles" resultMap="recentMap">
+        <include refid="selectCode"/>
+        f.is_folder = 0 and f.uid = #{uid}
+    </select>
+    <select id="getRecentFolders" resultMap="recentMap">
+        <include refid="selectCode"/>
+        f.is_folder = 1 and f.uid = #{uid}
+    </select>
+    <select id="getRecentFilesLimited" resultMap="recentMap">
+        <include refid="selectCode"/>
+        f.is_folder = 0 and f.uid = #{uid} ORDER BY time desc LIMIT 0 , #{limitedNumber}
+    </select>
+    <select id="getRecentFoldersLimited" resultMap="recentMap">
+        <include refid="selectCode"/>
+        f.is_folder = 1 and f.uid = #{uid} ORDER BY time desc LIMIT 0 , #{limitedNumber}
+    </select>
+    <select id="existRecord" resultMap="recentMap">
+        <include refid="selectCode"/>
+        f.uid = #{uid} and f.fid = #{fid}
+    </select>
+</mapper>

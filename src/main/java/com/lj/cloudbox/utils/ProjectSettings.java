@@ -36,7 +36,7 @@ public class ProjectSettings {
     }
 
     public String pathUnit(String path) {
-        if (path == null) return "";
+        if (path == null || "".equals(path)) return "";
         return path.replaceAll("\\\\", "/").replaceAll("^[/]+", "").replaceAll("[/]+$", "");
     }
 
@@ -71,9 +71,5 @@ public class ProjectSettings {
 
     public String getRealPath(String... paths) {
         return pathConcatWithRoot(paths);
-    }
-
-    public String getDumpPath(String... paths){
-        return pathConcatWithDump(paths);
     }
 }

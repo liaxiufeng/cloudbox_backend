@@ -1,6 +1,7 @@
 package com.lj.cloudbox.service;
 
 import com.lj.cloudbox.mapper.UserMapper;
+import com.lj.cloudbox.pojo.FileItem;
 import com.lj.cloudbox.pojo.User;
 import com.lj.cloudbox.utils.date.DateUtils;
 import com.lj.cloudbox.utils.file.FileSizeFormatUtil;
@@ -13,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Service
 public class UserService {
@@ -25,16 +27,16 @@ public class UserService {
     @Autowired
     ProjectSettings projectSettings;
 
-    public User getUser(String token){
+    public User getUser(String token) {
         if (!StringUtils.hasLength(token)) return null;
         try {
             String uid = TokenUtil.decode(token);
-            if (StringUtils.hasLength(uid)){
-                return userMapper.selectById(Integer.parseInt(uid));
-            }else {
+            if (StringUtils.hasLength(uid)) {
+                return userMapper.selectById(Integer.valueOf(uid));
+            } else {
                 return null;
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return null;
         }
     }
@@ -46,8 +48,12 @@ public class UserService {
 
     public void packaging_detail(User user) {
         try {
-            user.setAccountAge(DateUtils.getAge(user.getAccountBirthday()));
-            user.setAge(DateUtils.getAge(user.getBirthday()));
+            Date accountBirthday = user.getAccountBirthday();
+            Date birthday = user.getBirthday();
+            if (accountBirthday != null)
+                user.setAccountAge(DateUtils.getAge(accountBirthday));
+            if (birthday != null)
+                user.setAge(DateUtils.getAge(birthday));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,8 +74,8 @@ public class UserService {
         user.setFreeSpace(FileSizeFormatUtil.formatFileSize(freeSpace));
     }
 
-    public void createHome(User user){
-        user.setHomeFile(fileService.createHome(user.getUid()));
-        user.updateById();
+    public void createHome(User user) {
+        FileItem home = fileService.createHome(user.getUid());
+        userMapper.setHome(user.getUid(), home.getFid());
     }
 }

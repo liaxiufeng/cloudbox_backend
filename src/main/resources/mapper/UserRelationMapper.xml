@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.cloudbox.mapper.UserRelationMapper">
+    <resultMap id="relationMap" type="UserRelation">
+        <result column="proposer" property="proposer" javaType="User"
+                typeHandler="com.lj.cloudbox.mapper.typeHandler.UserTypeHandler"/>
+        <result column="verifier" property="verifier" javaType="User"
+                typeHandler="com.lj.cloudbox.mapper.typeHandler.UserTypeHandler"/>
+    </resultMap>
+    <select id="getUserRelations" resultMap="relationMap">
+        select * from user_relation where proposer = #{uid} or verifier = #{uid}
+    </select>
+
+    <select id="getRelation" resultMap="relationMap">
+        select * from user_relation where (proposer = #{uid1} and verifier = #{uid2}) or (verifier = #{uid1} and proposer = #{uid2})
+    </select>
+
+    <select id="searchRelationUser" resultMap="relationMap">
+        select r.* from user_relation r,user u where (( u.uid = r.proposer and r.verifier = #{uid}) or ( u.uid = r.verifier and r.proposer = #{uid} ))
+            and (u.uid = #{searchStr} or username like concat ('%' , #{searchStr} ,'%') or email = #{searchStr})
+    </select>
+</mapper>

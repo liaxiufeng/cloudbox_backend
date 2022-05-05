@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.lj.cloudbox.mapper.typeHandler.HomeFileTypeHandler;
+import com.lj.cloudbox.mapper.typeHandler.FileItemTypeHandler;
+import com.lj.cloudbox.mapper.typeHandler.SexTypeHandler;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -14,8 +16,9 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-@TableName("user")
+@TableName(autoResultMap = true)
 public class User extends Model<User> {
     @TableId(type = IdType.AUTO)
     private Integer uid;
@@ -23,10 +26,19 @@ public class User extends Model<User> {
     private String email;
     private String password;
     private String describeWord;
-    @TableField(typeHandler = HomeFileTypeHandler.class)
-    private FileBean homeFile;
+    @TableField(typeHandler = FileItemTypeHandler.class)
+    private FileItem homeFile;
     private Date birthday;
     private Date accountBirthday;
+    /*
+    last_chat int,
+	photo varchar(1000),
+	sex int,
+     */
+    private Integer lastChat;
+    private String photo;
+    @TableField(typeHandler = SexTypeHandler.class)
+    private String sex;
 
     @TableField(exist = false)
     private Integer age;

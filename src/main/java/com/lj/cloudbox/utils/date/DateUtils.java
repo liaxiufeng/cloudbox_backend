@@ -21,6 +21,24 @@ public class DateUtils {
         return sdf.format(date);
     }
 
+    public static Date format(Long date) {
+        try {
+            return sdf.parse(sdf.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Date format_total(Long date) {
+        try {
+            return sdf_total.parse(sdf_total.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static Date parse_total(String strDate) throws ParseException {
         return sdf_total.parse(strDate);
     }

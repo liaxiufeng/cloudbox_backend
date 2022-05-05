@@ -4,7 +4,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://liujun666.xyz:3306/cloudbox
+#    url: jdbc:mysql://junza.top:3306/cloudbox
+    url: jdbc:mysql://localhost:3306/cloudbox
 
   devtools:
     restart:
@@ -22,6 +23,9 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 100MB
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
 
 server:
   servlet:

@@ -2,17 +2,14 @@ package com.lj.cloudbox.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lj.cloudbox.pojo.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
 
-@Repository
+@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-    User selectById(Integer uid);
-
-    @Select("select * from user where email = #{email} and `password` = #{password}")
     User login(User user);
 
     @Update("update user set home_file = #{homeFileId} where uid = #{uid}")
@@ -28,4 +25,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select if(count(*)>0,false,true) from user where email = #{email}")
     Boolean emailIsAvailable(@Param("email") String username);
+
+    User searchUser(@Param("searchStr")String searchStr);
 }

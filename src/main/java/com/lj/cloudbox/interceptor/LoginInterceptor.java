@@ -18,6 +18,10 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (request.getMethod().equals("OPTIONS")) return true;
         String token = request.getHeader("token");
+
+        String requestURI = request.getRequestURI();
+        System.out.println("requestURI = " + requestURI);
+
         User user = userService.getUser(token);
         if(user != null) user.setPassword("隐私字段！！！");
         request.setAttribute("user",user);

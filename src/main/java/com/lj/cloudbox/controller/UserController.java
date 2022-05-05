@@ -37,13 +37,11 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    @ResponseBody
     public MSG getLoginUser(@RequestAttribute("user") User user) {
         return user == null ? MSG.fail("未登录") : MSG.success("已登录", user);
     }
 
     @GetMapping("/user/used")
-    @ResponseBody
     public MSG getUserUsed(@RequestAttribute("user") User user) {
         if (user == null) return MSG.fail("未登录");
         userService.packaging(user);
@@ -56,6 +54,7 @@ public class UserController {
         Boolean flag = userMapper.canRegister(user);
         if (flag) {
             user.setAccountBirthday(new Date());
+            user.setSex("男");
             user.insert();
             userService.createHome(user);
             return MSG.success("注册成功");

@@ -4,28 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lj.cloudbox.mapper.UserMapper">
     <resultMap id="userMap" type="User">
-        <id column="uid" property="uid"/>
-        <result column="username" property="username"/>
-        <result column="email" property="email"/>
-        <result column="password" property="password"/>
-        <result column="describeWord" property="describeWord"/>
-        <result column="birthday" property="birthday"/>
-        <result column="accountBirthday" property="accountBirthday"/>
-        <association property="homeFile" javaType="FileBean">
-            <id column="fid" property="fid"/>
-            <id column="parent" property="parent"/>
-            <id column="uid" property="uid"/>
-            <id column="name" property="name"/>
-            <id column="is_folder" property="isFolder"/>
-            <id column="is_heart" property="isHeart"/>
-        </association>
+        <result column="homeFile" property="homeFile" javaType="FileItem" typeHandler="com.lj.cloudbox.mapper.typeHandler.FileItemTypeHandler"/>
+        <result column="sex" property="sex" javaType="String" typeHandler="com.lj.cloudbox.mapper.typeHandler.SexTypeHandler"/>
     </resultMap>
-    <select id="selectById" resultMap="userMap">
-        SELECT * from user,file_item where user.uid = #{uid} and `user`.home_file = file_item.fid
-    </select>
 
     <select id="getHome" resultType="java.lang.String">
         select `name` from file_item,`user` where user.uid = #{uid} and user.home_file = file_item.fid
+    </select>
+    <select id="login" resultMap="userMap">
+        select * from user where email = #{email} and `password` = #{password}
+    </select>
+    <select id="searchUser" resultMap="userMap">
+        select * from user where uid = #{searchStr} or username = #{searchStr} or email = #{searchStr}
     </select>
 
 </mapper>
