@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@TableName(value = "recent_open_file",autoResultMap = true)
+@TableName(autoResultMap = true)
 public class RecentOpenFile extends Model<RecentOpenFile>{
     @TableId(type = IdType.AUTO)
     private Integer rid;

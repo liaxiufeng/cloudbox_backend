@@ -138,6 +138,26 @@ public class FileTypeUtils {
     }
 
     /**
+     * <p>Discription:[isImage,判断文件是否为图片]</p>
+     *
+     * @param is 文件输入流
+     * @return true 是 | false 否
+     */
+    public static boolean isImage(InputStream is) {
+        boolean flag;
+        try {
+            BufferedImage bufreader = ImageIO.read(is);
+            int width = bufreader.getWidth();
+            int height = bufreader.getHeight();
+            flag = !(width == 0 || height == 0);
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
+    }
+
+
+    /**
      * <p>Discription:[isImage,判断文件是否为文本文件]</p>
      *
      * @param file 文件

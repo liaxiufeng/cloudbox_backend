@@ -17,7 +17,7 @@ import java.io.File;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@TableName("file_item")
+@TableName
 public class FileItem extends Model<FileItem> implements Comparable<FileItem> {
     @TableId(type = IdType.AUTO)
     private Integer fid;

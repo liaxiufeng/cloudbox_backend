@@ -30,11 +30,7 @@ public class User extends Model<User> {
     private FileItem homeFile;
     private Date birthday;
     private Date accountBirthday;
-    /*
-    last_chat int,
-	photo varchar(1000),
-	sex int,
-     */
+
     private Integer lastChat;
     private String photo;
     @TableField(typeHandler = SexTypeHandler.class)
@@ -54,4 +50,6 @@ public class User extends Model<User> {
     private Long freeSpaceLong;
     @TableField(exist = false)
     private Double usedPercent;
+    @TableField(exist = false)
+    private String verifierCode;
 }

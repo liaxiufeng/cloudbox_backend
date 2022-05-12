@@ -14,24 +14,25 @@ import java.util.UUID;
 @Data
 public class ProjectSettings {
     private String root;
-    private String dump;
     private String space;
+
+    public void setRoot(String root) {
+        this.root = root;
+        File file = new File(root);
+        if (!file.exists()) file.mkdirs();
+    }
 
     public String createHome() {
         String fileRoot = pathUnit(root);
-        String dumpRoot = pathUnit(dump);
         File userHome;
-        File dumpHome;
         UUID uuid = null;
         String homeFileName;
         do {
             uuid = UUID.randomUUID();
             homeFileName = uuid.toString();
             userHome = new File(pathConcat(fileRoot, homeFileName));
-            dumpHome = new File(pathConcat(dumpRoot, homeFileName));
-        } while (userHome.exists() || dumpHome.exists());
+        } while (userHome.exists());
         userHome.mkdirs();
-        dumpHome.mkdirs();
         return homeFileName;
     }
 
@@ -55,10 +56,6 @@ public class ProjectSettings {
 
     private String pathConcatWithRoot(String... paths) {
         return pathConcat(addHead(paths, root));
-    }
-
-    private String pathConcatWithDump(String... paths) {
-        return pathConcat(addHead(paths, dump));
     }
 
     //头部插入函数

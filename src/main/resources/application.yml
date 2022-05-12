@@ -17,15 +17,21 @@ spring:
         enabled: true
   web:
     resources:
-      static-locations: classpath:templates/,classpath:static/,file:/www/local/,file:D:/runtime/cloudbox
+      static-locations: classpath:templates/,classpath:static/
+#      static-locations: classpath:templates/,classpath:static/,file:/www/local/,file:D:/runtime/cloudbox
   #文件上传
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 100MB
+      max-file-size: 1024MB
+      max-request-size: 1024MB
   jackson:
     date-format: yyyy-MM-dd
     time-zone: GMT+8
+#    邮箱验证
+  mail:
+    host: smtp.163.com
+    username: cloudbox2022@163.com
+    password: SLQHNJQFZKPYAHWJ
 
 server:
   servlet:
@@ -46,6 +52,5 @@ pagehelper:
 
 settings:
   root: D:/runtime/cloudbox/files
-  dump: D:/runtime/cloudbox/dump
   space: 2G
 

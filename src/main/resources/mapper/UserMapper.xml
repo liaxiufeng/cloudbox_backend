@@ -14,6 +14,9 @@
     <select id="login" resultMap="userMap">
         select * from user where email = #{email} and `password` = #{password}
     </select>
+    <select id="getUserByEmail" resultMap="userMap">
+        select * from user where email = #{email}
+    </select>
     <select id="searchUser" resultMap="userMap">
         select * from user where uid = #{searchStr} or username = #{searchStr} or email = #{searchStr}
     </select>

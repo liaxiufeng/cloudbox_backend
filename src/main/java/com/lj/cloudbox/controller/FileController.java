@@ -54,6 +54,14 @@ public class FileController {
         }
     }
 
+    @GetMapping("file")
+    public MSG file(@RequestAttribute("user") User user,
+                    @RequestParam("fid") Integer fid){
+        if (!CommonUtils.haveValue(user.getUid(),fid)) return MSG.fail("参数错误");
+        FileItem fileItem = fileMapper.selectById(fid);
+        return fileItem.getUid().equals(user.getUid()) ? MSG.success("获取文件成功", fileItem) : MSG.fail("无权限操作文件！");
+    }
+
     @GetMapping("createNewFile")
     public void createNewFile(@RequestAttribute("user") User user,
                               @RequestParam("isFolder") Boolean isFolder,
@@ -64,7 +72,7 @@ public class FileController {
 
 
 
-    @GetMapping("fileCheck")
+    @GetMapping("fileType")
     public MSG fileCheck(@RequestAttribute("user") User user,
                          @RequestParam("fid") Integer fid) {
         File file = fileService.getFile(fid, user);
@@ -103,12 +111,13 @@ public class FileController {
     @GetMapping("img")
     public MSG imgGet(@RequestAttribute("user") User user,
                       @RequestParam("fid") Integer fid,
-                      HttpServletResponse response) {
+                      HttpServletResponse response) throws FileNotFoundException {
         recentOpenFileService.open(fileMapper.selectById(fid));
         File file = fileService.getFile(fid, user);
         if (file == null) return MSG.fail("获取文件失败");
-        String base64 = ImageUtils.getBase64(file);
-        return MSG.success(base64);
+//        String base64 = ImageUtils.getBase64(file);
+        String base64 = ImageUtils.getBase64(new FileInputStream(file));
+        return MSG.success("获取成功",base64);
     }
 
 
