@@ -16,12 +16,6 @@ public class ProjectSettings {
     private String root;
     private String space;
 
-    public void setRoot(String root) {
-        this.root = root;
-        File file = new File(root);
-        if (!file.exists()) file.mkdirs();
-    }
-
     public String createHome() {
         String fileRoot = pathUnit(root);
         File userHome;
@@ -38,7 +32,8 @@ public class ProjectSettings {
 
     public String pathUnit(String path) {
         if (path == null || "".equals(path)) return "";
-        return path.replaceAll("\\\\", "/").replaceAll("^[/]+", "").replaceAll("[/]+$", "");
+//        return path.replaceAll("\\\\", "/").replaceAll("^[/]+", "").replaceAll("[/]+$", "");
+        return path.replaceAll("\\\\", "/").replaceAll("[/]+$", "");
     }
 
     public String pathConcat(String... paths) {

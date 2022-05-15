@@ -1,12 +1,18 @@
+#项目设置
+settings:
+  #
+  root: D:/runtime/cloudbox/files
+#  root: /data/cloudbox
+  space: 2G
+
 # DataSource Config
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
-#    url: jdbc:mysql://junza.top:3306/cloudbox
-    url: jdbc:mysql://localhost:3306/cloudbox
-
+#    url: jdbc:mysql://47.117.114.242:3306/cloudbox?characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/cloudbox?characterEncoding=UTF-8&useSSL=false
   devtools:
     restart:
       #设置开启热部署
@@ -18,7 +24,6 @@ spring:
   web:
     resources:
       static-locations: classpath:templates/,classpath:static/
-#      static-locations: classpath:templates/,classpath:static/,file:/www/local/,file:D:/runtime/cloudbox
   #文件上传
   servlet:
     multipart:
@@ -27,17 +32,19 @@ spring:
   jackson:
     date-format: yyyy-MM-dd
     time-zone: GMT+8
-#    邮箱验证
+  #    邮箱验证
   mail:
     host: smtp.163.com
     username: cloudbox2022@163.com
     password: SLQHNJQFZKPYAHWJ
+#    port: 465
+#    protocol: smtp
 
 server:
   servlet:
     context-path: /cloudbox
   port: 8181
-#错误信息
+  #错误信息
   error:
     include-message: always
     include-stacktrace: always
@@ -50,7 +57,4 @@ pagehelper:
   #启用合理化，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页
   reasonable: true
 
-settings:
-  root: D:/runtime/cloudbox/files
-  space: 2G
 

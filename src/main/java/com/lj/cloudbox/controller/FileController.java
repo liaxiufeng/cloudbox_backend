@@ -115,7 +115,6 @@ public class FileController {
         recentOpenFileService.open(fileMapper.selectById(fid));
         File file = fileService.getFile(fid, user);
         if (file == null) return MSG.fail("获取文件失败");
-//        String base64 = ImageUtils.getBase64(file);
         String base64 = ImageUtils.getBase64(new FileInputStream(file));
         return MSG.success("获取成功",base64);
     }

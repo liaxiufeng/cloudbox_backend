@@ -49,6 +49,7 @@ public class UserController {
     @GetMapping("/mail/login")
     public MSG mailVerifierLogin(@RequestParam("verifierMail") String verifierMail,
                                  @RequestParam("verifierCode") String verifierCode){
+        System.out.println("verifierMail = " + verifierMail + ", verifierCode = " + verifierCode);
         boolean verifierResult = mailService.verifierMailCode(verifierMail, verifierCode);
         if (!verifierResult) return MSG.fail("登录失败");
         User user = userMapper.getUserByEmail(verifierMail);
@@ -63,7 +64,9 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public MSG getLoginUser(@RequestAttribute("user") User user) {
+    public MSG getLoginUser(@RequestHeader(value = "token",required = false) String token) {
+        User user = userService.getUser(token);
+        if(user != null) user.setPassword("隐私字段！！！");
         return user == null ? MSG.fail("未登录") : MSG.success("已登录", user);
     }
 
@@ -76,16 +79,16 @@ public class UserController {
 
     @GetMapping("/mail/sendCode")
     public void mailProposer(@RequestParam("verifierMail") String verifierMail){
+        System.out.println("verifierMail = " + verifierMail);
         mailService.mail(verifierMail);
     }
 
     @GetMapping("/mail/verifier")
     public MSG mailVerifier(@RequestParam("verifierMail") String verifierMail,
                             @RequestParam("verifierCode") String verifierCode){
+        System.out.println("verifierMail = " + verifierMail + ", verifierCode = " + verifierCode);
         return mailService.verifierMailCode(verifierMail, verifierCode) ? MSG.success("验证邮箱成功") : MSG.fail("验证邮箱失败");
     }
-
-
 
     @PostMapping("/register")
     public MSG register(User user) {

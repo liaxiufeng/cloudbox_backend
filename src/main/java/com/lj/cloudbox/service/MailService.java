@@ -31,6 +31,7 @@ public class MailService {
         simpleMailMessage.setSubject("cloudbox注册账号");
         simpleMailMessage.setText("验证码: " + code);
         javaMailSender.send(simpleMailMessage);
+        System.out.println("邮箱"+verifierMail+"发送完毕 ");
         MailCode mailCode = new MailCode(verifierMail, code, new Date());
         mailCode.insertOrUpdate();
     }
@@ -39,9 +40,6 @@ public class MailService {
         if (!CommonUtils.haveValue(verifierMail,code)) return false;
         MailCode mailCode = mailCodeMapper.selectById(verifierMail);
         if (mailCode == null) return false;
-//        Date date = mailCode.getDate();
-//        int days = (int) ((new Date().getTime() - date.getTime()) / 1000*3600*24);
-//        if (days > 30) return false;
         return code.equals(String.valueOf(mailCode.getCode()));
     }
 }
